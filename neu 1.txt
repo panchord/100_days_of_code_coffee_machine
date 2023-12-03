@@ -1,0 +1,24 @@
+from menu import Menu, MenuItem
+from coffee_maker import CoffeeMaker
+from money_machine import MoneyMachine
+
+payment = MoneyMachine()
+coffee = CoffeeMaker()
+my_menu = Menu()
+
+
+running = True
+while running:
+    order = input("What kind of coffee would you like? 'Latte', 'Espresso' or 'Cappuccino'?\n> ").lower()
+    if order == "report":
+        coffee.report()
+        payment.report()
+    elif order == "off":
+        print("Goodbye")
+        running = False
+    elif order == "latte" or "espresso" or "cappuccino":
+        drink = my_menu.find_drink(order)
+        if coffee.is_resource_sufficient(drink) and payment.make_payment(drink.cost):
+            coffee.make_coffee(drink)
+    else:
+        print("Unknown Input")
